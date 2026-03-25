@@ -4,6 +4,15 @@ import { AuthRequest } from '../middleware/authenticate';
 import { requireMember } from './projects.controller';
 import { notFoundError, forbiddenError, badRequestError } from '../utils/errors';
 import { Prisma } from '@prisma/client';
+import { z } from 'zod';
+
+const updateTaskSchema = z.object({
+  title: z.string().min(1).max(255).optional(),
+  description: z.string().optional(),
+  status: z.enum(['TODO', 'IN_PROGRESS', 'UNDER_REVIEW', 'DONE', 'ARCHIVED']).optional(),
+  priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']).optional(),
+  dueDate: z.string().nullable().optional(),
+}).strict();
 type TaskStatus = string;
 type Priority = string;
 // Note: TaskStatus and Priority are stored as strings in DB, not enums
@@ -63,12 +72,16 @@ export async function listTasks(req: AuthRequest, res: Response, next: NextFunct
     const tasks = await prisma.task.findMany({ where, include: TASK_INCLUDE, orderBy });
 
     // Enrich with subTaskDoneCount
-    const enriched = await Promise.all(
-      tasks.map(async (t) => {
-        const doneCount = await prisma.subTask.count({ where: { taskId: t.id, isDone: true } });
-        return { ...formatTask(t as Parameters<typeof formatTask>[0])!, subTaskDoneCount: doneCount };
-      })
-    );
+    const doneCounts = await prisma.subTask.groupBy({
+      by: ['taskId'],
+      where: { taskId: { in: tasks.map(t => t.id) }, isDone: true },
+      _count: { _all: true },
+    });
+    const doneByTask = Object.fromEntries(doneCounts.map(r => [r.taskId, r._count._all]));
+    const enriched = tasks.map(t => ({
+      ...formatTask(t as Parameters<typeof formatTask>[0])!,
+      subTaskDoneCount: doneByTask[t.id] ?? 0,
+    }));
 
     res.json(enriched);
   } catch (err) {
@@ -139,7 +152,9 @@ export async function getTask(req: AuthRequest, res: Response, next: NextFunctio
     await requireMember(task.projectId, req.userId);
 
     const doneCount = await prisma.subTask.count({ where: { taskId: task.id, isDone: true } });
-    res.json({ ...formatTask(task as Parameters<typeof formatTask>[0])!, subTaskDoneCount: doneCount });
+    const formatted = formatTask(task as Parameters<typeof formatTask>[0]);
+    if (!formatted) throw notFoundError('Task');
+    res.json({ ...formatted, subTaskDoneCount: doneCount });
   } catch (err) {
     next(err);
   }
@@ -148,13 +163,18 @@ export async function getTask(req: AuthRequest, res: Response, next: NextFunctio
 // PUT /api/tasks/:id
 export async function updateTask(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
   try {
+    const parseResult = updateTaskSchema.safeParse(req.body);
+    if (!parseResult.success) {
+      throw badRequestError(parseResult.error.errors.map(e => e.message).join(', '));
+    }
+
     const existing = await prisma.task.findUnique({ where: { id: req.params.id } });
     if (!existing) throw notFoundError('Task');
 
     const member = await requireMember(existing.projectId, req.userId);
     if (member.role === 'VIEWER') throw forbiddenError();
 
-    const { title, description, status, priority, dueDate } = req.body as Partial<{
+    const { title, description, status, priority, dueDate } = parseResult.data as Partial<{
       title: string; description: string; status: TaskStatus; priority: Priority; dueDate: string | null;
     }>;
 
@@ -184,7 +204,9 @@ export async function updateTask(req: AuthRequest, res: Response, next: NextFunc
     }
 
     const doneCount = await prisma.subTask.count({ where: { taskId: task.id, isDone: true } });
-    res.json({ ...formatTask(task as Parameters<typeof formatTask>[0])!, subTaskDoneCount: doneCount });
+    const formatted = formatTask(task as Parameters<typeof formatTask>[0]);
+    if (!formatted) throw notFoundError('Task');
+    res.json({ ...formatted, subTaskDoneCount: doneCount });
   } catch (err) {
     next(err);
   }
@@ -467,7 +489,9 @@ export async function reorderTask(req: AuthRequest, res: Response, next: NextFun
     }
 
     const doneCount = await prisma.subTask.count({ where: { taskId, isDone: true } });
-    res.json({ ...formatTask(updated as Parameters<typeof formatTask>[0])!, subTaskDoneCount: doneCount });
+    const formatted = formatTask(updated as Parameters<typeof formatTask>[0]);
+    if (!formatted) throw notFoundError('Task');
+    res.json({ ...formatted, subTaskDoneCount: doneCount });
   } catch (err) {
     next(err);
   }

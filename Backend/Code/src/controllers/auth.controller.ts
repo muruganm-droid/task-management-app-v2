@@ -94,7 +94,9 @@ export async function forgotPassword(req: Request, res: Response, next: NextFunc
     if (user) {
       // In production: generate a short-lived reset token, store it, and email it
       const resetToken = uuidv4();
-      console.log(`[DEV] Password reset token for ${email}: ${resetToken}`);
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[DEV] Password reset token: ${resetToken}`);
+      }
     }
     res.json({ message: 'If that email is registered, a reset link has been sent.' });
   } catch (err) {

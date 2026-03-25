@@ -154,6 +154,8 @@ model ActivityLog {
 
   task  Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
   actor User @relation(fields: [actorId], references: [id])
+
+  @@index([taskId, createdAt])
 }
 
 model Notification {
@@ -167,6 +169,8 @@ model Notification {
   createdAt DateTime         @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
 }
 
 model Attachment {

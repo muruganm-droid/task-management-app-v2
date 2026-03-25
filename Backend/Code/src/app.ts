@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import rateLimit from 'express-rate-limit';
 
 import path from 'path';
 import authRoutes from './routes/auth';
@@ -25,6 +26,10 @@ const corsOrigin = process.env.CORS_ORIGIN?.trim() || '*';
 app.use(cors({ origin: corsOrigin, credentials: corsOrigin !== '*' }));
 app.use(express.json());
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+
+// Global rate limiter
+const globalLimiter = rateLimit({ windowMs: 60_000, max: 300 });
+app.use('/api/', globalLimiter);
 
 // Health check
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));

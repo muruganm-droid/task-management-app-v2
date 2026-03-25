@@ -154,6 +154,11 @@ export async function removeMember(req: AuthRequest, res: Response, next: NextFu
     if (actor.role === 'VIEWER' || actor.role === 'MEMBER') throw forbiddenError();
     if (req.params.uid === req.userId) throw badRequestError('You cannot remove yourself from the project.');
 
+    const project = await prisma.project.findUnique({ where: { id: req.params.id } });
+    if (project && req.params.uid === project.ownerId) {
+      throw forbiddenError('Cannot remove the project owner');
+    }
+
     await prisma.projectMember.delete({
       where: { projectId_userId: { projectId: req.params.id, userId: req.params.uid } },
     });
