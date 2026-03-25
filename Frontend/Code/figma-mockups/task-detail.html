@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Detail - Task Management App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #E5E7EB; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; }
+
+  .phone-frame {
+    width: 390px; min-height: 844px; background: #F9FAFB; border-radius: 40px;
+    overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    border: 8px solid #1a1a1a; display: flex; flex-direction: column;
+  }
+  .status-bar { height: 54px; padding: 14px 24px 0; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; color: #111827; flex-shrink: 0; }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .app-bar { padding: 8px 16px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .app-bar .material-icons-round { font-size: 24px; color: #111827; }
+  .app-bar h2 { font-size: 18px; font-weight: 600; color: #111827; flex: 1; }
+
+  .content { flex: 1; padding: 0 20px 20px; }
+
+  .task-header { margin-bottom: 16px; }
+  .task-title { font-size: 22px; font-weight: 700; color: #111827; margin-bottom: 10px; }
+  .badges { display: flex; gap: 8px; margin-bottom: 10px; }
+  .status-badge { padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+  .status-progress { background: #EFF6FF; color: #3B82F6; border: 1px solid #93C5FD; }
+  .priority-badge { padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+  .priority-critical { background: #FEF2F2; color: #EF4444; border: 1px solid #FCA5A5; }
+  .due-date { font-size: 13px; color: #6B7280; display: flex; align-items: center; gap: 4px; }
+  .due-date .material-icons-round { font-size: 16px; }
+
+  .tabs { display: flex; border-bottom: 2px solid #E5E7EB; margin-bottom: 16px; }
+  .tab { flex: 1; text-align: center; padding: 12px 0; font-size: 14px; font-weight: 500; color: #6B7280; position: relative; }
+  .tab.active { color: #6366F1; font-weight: 600; }
+  .tab.active::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: #6366F1; }
+
+  .detail-section { margin-bottom: 20px; }
+  .detail-label { font-size: 12px; font-weight: 600; color: #6B7280; text-transform: uppercase; margin-bottom: 6px; }
+  .detail-value { font-size: 14px; color: #111827; line-height: 1.5; }
+
+  .assignees { display: flex; gap: 8px; }
+  .assignee-chip { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: white; border: 1px solid #E5E7EB; border-radius: 8px; }
+  .assignee-chip-avatar { width: 24px; height: 24px; border-radius: 50%; color: white; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .assignee-chip-name { font-size: 13px; color: #111827; font-weight: 500; }
+
+  .subtask-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #F3F4F6; }
+  .subtask-check { font-size: 22px; }
+  .subtask-check.done { color: #10B981; }
+  .subtask-check.pending { color: #D1D5DB; }
+  .subtask-title { font-size: 14px; color: #111827; }
+  .subtask-title.done { text-decoration: line-through; color: #9CA3AF; }
+
+  .comment-item { padding: 12px 0; border-bottom: 1px solid #F3F4F6; }
+  .comment-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .comment-avatar { width: 28px; height: 28px; border-radius: 50%; font-size: 11px; font-weight: 600; color: white; display: flex; align-items: center; justify-content: center; }
+  .comment-author { font-size: 13px; font-weight: 600; color: #111827; }
+  .comment-time { font-size: 11px; color: #9CA3AF; }
+  .comment-body { font-size: 13px; color: #374151; line-height: 1.4; padding-left: 36px; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span>9:41</span><div class="status-icons"><span class="material-icons-round" style="font-size:17px">signal_cellular_alt</span><span class="material-icons-round" style="font-size:17px">wifi</span><span class="material-icons-round" style="font-size:17px">battery_full</span></div></div>
+  <div class="app-bar"><span class="material-icons-round">arrow_back</span><h2>Task Detail</h2><span class="material-icons-round">more_vert</span></div>
+  <div class="content">
+    <div class="task-header">
+      <div class="task-title">Implement auth flow</div>
+      <div class="badges"><span class="status-badge status-progress">IN PROGRESS</span><span class="priority-badge priority-critical">CRITICAL</span></div>
+      <div class="due-date"><span class="material-icons-round">calendar_today</span> Due Mar 26, 2026</div>
+    </div>
+
+    <div class="tabs"><div class="tab active">Details</div><div class="tab">Comments</div><div class="tab">Activity</div><div class="tab">Files</div></div>
+
+    <div class="detail-section">
+      <div class="detail-label">Description</div>
+      <div class="detail-value">Build complete authentication flow including login, register, and password reset. Integrate with backend JWT API.</div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">Assignees</div>
+      <div class="assignees">
+        <div class="assignee-chip"><div class="assignee-chip-avatar" style="background:#6366F1">JD</div><span class="assignee-chip-name">John Doe</span></div>
+        <div class="assignee-chip"><div class="assignee-chip-avatar" style="background:#8B5CF6">AK</div><span class="assignee-chip-name">Alex Kim</span></div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">Subtasks (2/4)</div>
+      <div class="subtask-item"><span class="material-icons-round subtask-check done">check_circle</span><span class="subtask-title done">Design login screen UI</span></div>
+      <div class="subtask-item"><span class="material-icons-round subtask-check done">check_circle</span><span class="subtask-title done">Implement login API</span></div>
+      <div class="subtask-item"><span class="material-icons-round subtask-check pending">radio_button_unchecked</span><span class="subtask-title">Build register screen</span></div>
+      <div class="subtask-item"><span class="material-icons-round subtask-check pending">radio_button_unchecked</span><span class="subtask-title">Add password reset flow</span></div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">Recent Comments</div>
+      <div class="comment-item"><div class="comment-header"><div class="comment-avatar" style="background:#8B5CF6">AK</div><span class="comment-author">Alex Kim</span><span class="comment-time">2h ago</span></div><div class="comment-body">Login screen looks great! Handle error states for invalid credentials.</div></div>
+      <div class="comment-item"><div class="comment-header"><div class="comment-avatar" style="background:#6366F1">JD</div><span class="comment-author">John Doe</span><span class="comment-time">4h ago</span></div><div class="comment-body">Added login API integration. Token refresh working.</div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

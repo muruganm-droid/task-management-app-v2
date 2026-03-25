@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Dark - Task Management App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #1a1a1a; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; }
+  .phone-frame { width: 390px; min-height: 844px; background: #121212; border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.4); border: 8px solid #000; display: flex; flex-direction: column; }
+  .status-bar { height: 54px; padding: 14px 24px 0; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; color: #E0E0E0; flex-shrink: 0; }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .app-bar { height: 56px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .app-bar h1 { font-size: 22px; font-weight: 700; color: #F3F4F6; }
+  .content { padding: 0 16px 16px; }
+  .stats-row { display: flex; gap: 10px; margin-bottom: 20px; }
+  .stat-card { flex: 1; background: #1E1E1E; border-radius: 12px; padding: 14px; border: 1px solid #2A2A2A; }
+  .stat-number { font-size: 28px; font-weight: 700; }
+  .stat-label { font-size: 12px; color: #9CA3AF; font-weight: 500; margin-top: 2px; }
+  .stat-todo .stat-number { color: #9CA3AF; }
+  .stat-progress .stat-number { color: #60A5FA; }
+  .stat-done .stat-number { color: #34D399; }
+  .analytics-card { background: linear-gradient(135deg, #6366F1, #8B5CF6); border-radius: 12px; padding: 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .analytics-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; }
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; margin-top: 8px; }
+  .section-title { font-size: 17px; font-weight: 600; color: #F3F4F6; }
+  .overdue-card { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+  .overdue-title { font-size: 14px; font-weight: 600; color: #FCA5A5; }
+  .overdue-meta { font-size: 12px; color: #F87171; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+  .filter-chips { display: flex; gap: 8px; margin-bottom: 16px; }
+  .chip { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; border: 1px solid #2A2A2A; background: #1E1E1E; color: #9CA3AF; }
+  .chip.active { background: #6366F1; color: white; border-color: #6366F1; }
+  .task-card { background: #1E1E1E; border: 1px solid #2A2A2A; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+  .task-title { font-size: 15px; font-weight: 600; color: #F3F4F6; margin-bottom: 4px; }
+  .task-desc { font-size: 13px; color: #9CA3AF; margin-bottom: 10px; }
+  .task-meta { display: flex; align-items: center; gap: 8px; }
+  .priority-badge { padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+  .priority-high { background: rgba(249,115,22,0.15); color: #FB923C; border: 1px solid rgba(249,115,22,0.3); }
+  .priority-medium { background: rgba(245,158,11,0.15); color: #FBBF24; border: 1px solid rgba(245,158,11,0.3); }
+  .priority-critical { background: rgba(239,68,68,0.15); color: #F87171; border: 1px solid rgba(239,68,68,0.3); }
+  .task-due { font-size: 12px; color: #9CA3AF; display: flex; align-items: center; gap: 3px; }
+  .task-due .material-icons-round { font-size: 15px; }
+  .subtask-progress { font-size: 12px; color: #9CA3AF; display: flex; align-items: center; gap: 3px; }
+  .subtask-progress .material-icons-round { font-size: 15px; }
+  .assignee-stack { display: flex; margin-left: auto; }
+  .assignee-avatar { width: 26px; height: 26px; border-radius: 50%; background: #6366F1; color: white; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; border: 2px solid #1E1E1E; margin-left: -8px; }
+  .assignee-avatar:first-child { margin-left: 0; }
+  .assignee-avatar.purple { background: #8B5CF6; }
+  .assignee-avatar.blue { background: #3B82F6; }
+  .bottom-nav { height: 64px; background: #1E1E1E; border-top: 1px solid #2A2A2A; display: flex; justify-content: space-around; align-items: center; padding-bottom: 8px; flex-shrink: 0; margin-top: auto; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .nav-item .material-icons-round { font-size: 24px; color: #6B7280; }
+  .nav-item span:last-child { font-size: 11px; color: #6B7280; font-weight: 500; }
+  .nav-item.active .material-icons-round { color: #818CF8; }
+  .nav-item.active span:last-child { color: #818CF8; }
+  .nav-badge-wrapper { position: relative; }
+  .nav-badge { position: absolute; top: -4px; right: -8px; background: #EF4444; color: white; font-size: 9px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span>9:41</span><div class="status-icons"><span class="material-icons-round" style="font-size:17px">signal_cellular_alt</span><span class="material-icons-round" style="font-size:17px">wifi</span><span class="material-icons-round" style="font-size:17px">battery_full</span></div></div>
+  <div class="app-bar"><h1>Dashboard</h1></div>
+  <div class="content">
+    <div class="stats-row">
+      <div class="stat-card stat-todo"><div class="stat-number">5</div><div class="stat-label">To Do</div></div>
+      <div class="stat-card stat-progress"><div class="stat-number">3</div><div class="stat-label">In Progress</div></div>
+      <div class="stat-card stat-done"><div class="stat-number">12</div><div class="stat-label">Done</div></div>
+    </div>
+    <div class="analytics-card">
+      <div class="analytics-icon"><span class="material-icons-round" style="color:white;font-size:22px">insights</span></div>
+      <div style="flex:1"><div style="font-size:14px;font-weight:600;color:white">Analytics</div><div style="font-size:12px;color:rgba(255,255,255,0.75)">View charts & team performance</div></div>
+      <span class="material-icons-round" style="color:rgba(255,255,255,0.6);font-size:20px">chevron_right</span>
+    </div>
+    <div class="section-header"><span class="section-title">Overdue Tasks</span></div>
+    <div class="overdue-card"><div class="overdue-title">Fix login API error handling</div><div class="overdue-meta"><span class="material-icons-round" style="font-size:14px">calendar_today</span> Due Mar 20, 2026</div></div>
+    <div class="section-header" style="margin-top:16px"><span class="section-title">My Tasks</span></div>
+    <div class="filter-chips"><div class="chip active">All</div><div class="chip">To Do</div><div class="chip">In Progress</div><div class="chip">Done</div></div>
+    <div class="task-card">
+      <div class="task-title">Design new dashboard layout</div>
+      <div class="task-desc">Create wireframes and mockups for the redesigned dashboard</div>
+      <div class="task-meta"><span class="priority-badge priority-high">HIGH</span><span class="task-due"><span class="material-icons-round">calendar_today</span> Mar 28</span><span class="subtask-progress"><span class="material-icons-round">check_circle_outline</span> 2/4</span><div class="assignee-stack"><div class="assignee-avatar">JD</div><div class="assignee-avatar purple">AK</div></div></div>
+    </div>
+    <div class="task-card">
+      <div class="task-title">Implement notification system</div>
+      <div class="task-desc">Build push notification service with Firebase integration</div>
+      <div class="task-meta"><span class="priority-badge priority-critical">CRITICAL</span><span class="task-due"><span class="material-icons-round">calendar_today</span> Mar 26</span><div class="assignee-stack"><div class="assignee-avatar blue">SM</div></div></div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item active"><span class="material-icons-round">dashboard</span><span>Dashboard</span></div>
+    <div class="nav-item"><span class="material-icons-round">folder</span><span>Projects</span></div>
+    <div class="nav-item"><div class="nav-badge-wrapper"><span class="material-icons-round">notifications</span><div class="nav-badge">3</div></div><span>Notifications</span></div>
+    <div class="nav-item"><span class="material-icons-round">settings</span><span>Settings</span></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics - Task Management App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #E5E7EB; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; }
+  .phone-frame { width: 390px; min-height: 844px; background: #F9FAFB; border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.15); border: 8px solid #1a1a1a; display: flex; flex-direction: column; }
+  .status-bar { height: 54px; padding: 14px 24px 0; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; color: #111827; flex-shrink: 0; }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .app-bar { padding: 8px 16px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .app-bar .material-icons-round { font-size: 24px; color: #111827; }
+  .app-bar h2 { font-size: 18px; font-weight: 600; color: #111827; flex: 1; }
+  .content { flex: 1; padding: 0 16px 20px; overflow-y: auto; }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .kpi-card { background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 14px; }
+  .kpi-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+  .kpi-icon .material-icons-round { font-size: 20px; }
+  .kpi-value { font-size: 24px; font-weight: 700; color: #111827; }
+  .kpi-label { font-size: 12px; color: #6B7280; margin-top: 2px; }
+  .chart-card { background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .chart-title { font-size: 15px; font-weight: 600; color: #111827; margin-bottom: 14px; }
+  .donut-container { display: flex; align-items: center; gap: 20px; }
+  .donut { width: 120px; height: 120px; border-radius: 50%; background: conic-gradient(#6B7280 0% 25%, #3B82F6 25% 40%, #F59E0B 40% 50%, #10B981 50% 100%); position: relative; }
+  .donut-hole { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 70px; height: 70px; border-radius: 50%; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .donut-total { font-size: 20px; font-weight: 700; color: #111827; }
+  .donut-label { font-size: 10px; color: #6B7280; }
+  .legend { display: flex; flex-direction: column; gap: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #374151; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+  .legend-count { font-weight: 600; margin-left: auto; }
+  .trend-chart { height: 120px; display: flex; align-items: flex-end; gap: 4px; padding-top: 10px; }
+  .trend-bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .trend-bar { width: 100%; border-radius: 4px 4px 0 0; min-height: 4px; }
+  .trend-label { font-size: 9px; color: #9CA3AF; }
+  .workload-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #F3F4F6; }
+  .workload-avatar { width: 32px; height: 32px; border-radius: 50%; color: white; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .workload-info { flex: 1; }
+  .workload-name { font-size: 13px; font-weight: 600; color: #111827; }
+  .workload-bar-bg { height: 6px; background: #F3F4F6; border-radius: 3px; margin-top: 4px; }
+  .workload-bar { height: 6px; border-radius: 3px; background: #6366F1; }
+  .workload-count { font-size: 12px; font-weight: 600; color: #6B7280; }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span>9:41</span><div class="status-icons"><span class="material-icons-round" style="font-size:17px">signal_cellular_alt</span><span class="material-icons-round" style="font-size:17px">wifi</span><span class="material-icons-round" style="font-size:17px">battery_full</span></div></div>
+  <div class="app-bar"><span class="material-icons-round">arrow_back</span><h2>Analytics</h2></div>
+  <div class="content">
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="kpi-icon" style="background:rgba(16,185,129,0.1)"><span class="material-icons-round" style="color:#10B981">trending_up</span></div><div class="kpi-value">78%</div><div class="kpi-label">Completion Rate</div></div>
+      <div class="kpi-card"><div class="kpi-icon" style="background:rgba(239,68,68,0.1)"><span class="material-icons-round" style="color:#EF4444">warning</span></div><div class="kpi-value">4</div><div class="kpi-label">Overdue Tasks</div></div>
+      <div class="kpi-card"><div class="kpi-icon" style="background:rgba(59,130,246,0.1)"><span class="material-icons-round" style="color:#3B82F6">schedule</span></div><div class="kpi-value">3.2d</div><div class="kpi-label">Avg Completion</div></div>
+      <div class="kpi-card"><div class="kpi-icon" style="background:rgba(99,102,241,0.1)"><span class="material-icons-round" style="color:#6366F1">assignment</span></div><div class="kpi-value">20</div><div class="kpi-label">Total Tasks</div></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Status Distribution</div>
+      <div class="donut-container">
+        <div class="donut"><div class="donut-hole"><div class="donut-total">20</div><div class="donut-label">Total</div></div></div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#6B7280"></div>To Do<span class="legend-count">5</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#3B82F6"></div>In Progress<span class="legend-count">3</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#F59E0B"></div>Under Review<span class="legend-count">2</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Done<span class="legend-count">10</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Weekly Trend (Created vs Completed)</div>
+      <div class="trend-chart">
+        <div class="trend-bar-group"><div class="trend-bar" style="height:40px;background:#6366F1"></div><div class="trend-bar" style="height:30px;background:#10B981"></div><div class="trend-label">W1</div></div>
+        <div class="trend-bar-group"><div class="trend-bar" style="height:60px;background:#6366F1"></div><div class="trend-bar" style="height:45px;background:#10B981"></div><div class="trend-label">W2</div></div>
+        <div class="trend-bar-group"><div class="trend-bar" style="height:35px;background:#6366F1"></div><div class="trend-bar" style="height:50px;background:#10B981"></div><div class="trend-label">W3</div></div>
+        <div class="trend-bar-group"><div class="trend-bar" style="height:50px;background:#6366F1"></div><div class="trend-bar" style="height:55px;background:#10B981"></div><div class="trend-label">W4</div></div>
+      </div>
+      <div style="display:flex;gap:16px;justify-content:center;margin-top:10px"><div class="legend-item"><div class="legend-dot" style="background:#6366F1"></div>Created</div><div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>Completed</div></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Team Workload</div>
+      <div class="workload-item"><div class="workload-avatar" style="background:#6366F1">JD</div><div class="workload-info"><div class="workload-name">John Doe</div><div class="workload-bar-bg"><div class="workload-bar" style="width:80%"></div></div></div><div class="workload-count">8</div></div>
+      <div class="workload-item"><div class="workload-avatar" style="background:#8B5CF6">AK</div><div class="workload-info"><div class="workload-name">Alex Kim</div><div class="workload-bar-bg"><div class="workload-bar" style="width:60%"></div></div></div><div class="workload-count">6</div></div>
+      <div class="workload-item"><div class="workload-avatar" style="background:#3B82F6">SM</div><div class="workload-info"><div class="workload-name">Sara Miller</div><div class="workload-bar-bg"><div class="workload-bar" style="width:40%"></div></div></div><div class="workload-count">4</div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

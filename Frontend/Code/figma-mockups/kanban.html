@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanban Board - Task Management App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #E5E7EB; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; }
+
+  .phone-frame {
+    width: 390px; height: 844px; background: #F9FAFB; border-radius: 40px;
+    overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    border: 8px solid #1a1a1a; display: flex; flex-direction: column;
+  }
+  .status-bar { height: 54px; padding: 14px 24px 0; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; color: #111827; flex-shrink: 0; }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .app-bar { padding: 8px 16px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .app-bar .material-icons-round { font-size: 24px; color: #111827; }
+  .app-bar h2 { font-size: 18px; font-weight: 600; color: #111827; flex: 1; }
+  .app-bar-actions { display: flex; gap: 8px; }
+
+  .board-container { flex: 1; padding: 0 16px 16px; }
+
+  .kanban-column { margin-bottom: 16px; }
+  .column-header { padding: 10px 14px; border-radius: 10px 10px 0 0; display: flex; align-items: center; justify-content: space-between; }
+  .column-header h3 { font-size: 14px; font-weight: 600; text-transform: uppercase; }
+  .column-count { width: 22px; height: 22px; border-radius: 6px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+  .col-todo .column-header { background: #F3F4F6; }
+  .col-todo .column-header h3 { color: #6B7280; }
+  .col-todo .column-count { background: #E5E7EB; color: #6B7280; }
+  .col-progress .column-header { background: #EFF6FF; }
+  .col-progress .column-header h3 { color: #3B82F6; }
+  .col-progress .column-count { background: #BFDBFE; color: #3B82F6; }
+  .col-review .column-header { background: #FFFBEB; }
+  .col-review .column-header h3 { color: #F59E0B; }
+  .col-review .column-count { background: #FDE68A; color: #D97706; }
+  .col-done .column-header { background: #ECFDF5; }
+  .col-done .column-header h3 { color: #10B981; }
+  .col-done .column-count { background: #A7F3D0; color: #059669; }
+
+  .column-tasks { padding: 8px 0; }
+  .task-card { background: white; border: 1px solid #E5E7EB; border-radius: 10px; padding: 12px; margin-bottom: 8px; }
+  .task-title { font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 4px; }
+  .task-desc { font-size: 12px; color: #6B7280; margin-bottom: 8px; line-height: 1.3; }
+  .task-meta { display: flex; align-items: center; gap: 6px; }
+  .priority-badge { padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: 600; text-transform: uppercase; }
+  .priority-high { background: #FFF7ED; color: #F97316; border: 1px solid #FDBA74; }
+  .priority-medium { background: #FFFBEB; color: #F59E0B; border: 1px solid #FCD34D; }
+  .priority-low { background: #ECFDF5; color: #10B981; border: 1px solid #6EE7B7; }
+  .priority-critical { background: #FEF2F2; color: #EF4444; border: 1px solid #FCA5A5; }
+  .task-due { font-size: 11px; color: #6B7280; display: flex; align-items: center; gap: 2px; }
+  .task-due .material-icons-round { font-size: 13px; }
+  .assignee-mini { width: 22px; height: 22px; border-radius: 50%; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; color: white; margin-left: auto; }
+
+  .fab { position: absolute; bottom: 24px; right: 24px; width: 56px; height: 56px; border-radius: 16px; background: #6366F1; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(99,102,241,0.4); border: none; }
+  .fab .material-icons-round { font-size: 28px; color: white; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span>9:41</span><div class="status-icons"><span class="material-icons-round" style="font-size:17px">signal_cellular_alt</span><span class="material-icons-round" style="font-size:17px">wifi</span><span class="material-icons-round" style="font-size:17px">battery_full</span></div></div>
+  <div class="app-bar">
+    <span class="material-icons-round">arrow_back</span>
+    <h2>Mobile App Redesign</h2>
+    <div class="app-bar-actions"><span class="material-icons-round">search</span><span class="material-icons-round">filter_list</span></div>
+  </div>
+  <div class="board-container">
+    <!-- Showing TO DO column as the primary visible column in mobile view -->
+    <div class="kanban-column col-todo">
+      <div class="column-header"><h3>To Do</h3><span class="column-count">3</span></div>
+      <div class="column-tasks">
+        <div class="task-card"><div class="task-title">Setup CI/CD pipeline</div><div class="task-desc">Configure GitHub Actions for automated builds</div><div class="task-meta"><span class="priority-badge priority-high">HIGH</span><span class="task-due"><span class="material-icons-round">calendar_today</span>Mar 29</span><div class="assignee-mini" style="background:#6366F1">JD</div></div></div>
+        <div class="task-card"><div class="task-title">Design dark mode theme</div><div class="task-desc">Create color tokens for dark theme variant</div><div class="task-meta"><span class="priority-badge priority-medium">MEDIUM</span><span class="task-due"><span class="material-icons-round">calendar_today</span>Apr 2</span><div class="assignee-mini" style="background:#8B5CF6">AK</div></div></div>
+        <div class="task-card"><div class="task-title">Write API documentation</div><div class="task-meta"><span class="priority-badge priority-low">LOW</span><span class="task-due"><span class="material-icons-round">calendar_today</span>Apr 5</span><div class="assignee-mini" style="background:#3B82F6">SM</div></div></div>
+      </div>
+    </div>
+
+    <div class="kanban-column col-progress">
+      <div class="column-header"><h3>In Progress</h3><span class="column-count">2</span></div>
+      <div class="column-tasks">
+        <div class="task-card"><div class="task-title">Implement auth flow</div><div class="task-desc">Login, register, password reset</div><div class="task-meta"><span class="priority-badge priority-critical">CRITICAL</span><span class="task-due"><span class="material-icons-round">calendar_today</span>Mar 26</span><div class="assignee-mini" style="background:#6366F1">JD</div></div></div>
+        <div class="task-card"><div class="task-title">Build notification service</div><div class="task-desc">Firebase push notifications</div><div class="task-meta"><span class="priority-badge priority-high">HIGH</span><span class="task-due"><span class="material-icons-round">calendar_today</span>Mar 28</span><div class="assignee-mini" style="background:#8B5CF6">AK</div></div></div>
+      </div>
+    </div>
+  </div>
+  <button class="fab" style="bottom:90px;right:24px;width:44px;height:44px;border-radius:12px;background:white;box-shadow:0 2px 8px rgba(0,0,0,0.15);border:1px solid #E5E7EB"><span class="material-icons-round" style="font-size:22px;color:#6366F1">mic</span></button>
+  <button class="fab"><span class="material-icons-round">add</span></button>
+</div>
+</body>
+</html>

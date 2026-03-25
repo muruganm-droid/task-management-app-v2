@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects - Task Management App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #E5E7EB; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; }
+
+  .phone-frame {
+    width: 390px; height: 844px; background: #F9FAFB; border-radius: 40px;
+    overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    border: 8px solid #1a1a1a; display: flex; flex-direction: column;
+  }
+  .status-bar { height: 54px; padding: 14px 24px 0; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; color: #111827; flex-shrink: 0; }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .app-bar { height: 56px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .app-bar h1 { font-size: 22px; font-weight: 700; color: #111827; }
+
+  .content { flex: 1; padding: 0 16px 16px; }
+
+  .project-card { background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 14px; }
+  .project-avatar { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: white; flex-shrink: 0; }
+  .project-info { flex: 1; min-width: 0; }
+  .project-name { font-size: 16px; font-weight: 600; color: #111827; }
+  .project-desc { font-size: 13px; color: #6B7280; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .project-meta { display: flex; gap: 14px; margin-top: 6px; }
+  .project-meta-item { font-size: 12px; color: #9CA3AF; display: flex; align-items: center; gap: 3px; }
+  .project-meta-item .material-icons-round { font-size: 14px; }
+  .project-chevron .material-icons-round { font-size: 22px; color: #D1D5DB; }
+  .archived-badge { padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; background: #F3F4F6; color: #9CA3AF; text-transform: uppercase; }
+
+  .fab { position: absolute; bottom: 80px; right: 24px; width: 56px; height: 56px; border-radius: 16px; background: #6366F1; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(99,102,241,0.4); border: none; }
+  .fab .material-icons-round { font-size: 28px; color: white; }
+
+  .bottom-nav { height: 64px; background: white; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-around; align-items: center; padding-bottom: 8px; flex-shrink: 0; margin-top: auto; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .nav-item .material-icons-round { font-size: 24px; color: #9CA3AF; }
+  .nav-item span:last-child { font-size: 11px; color: #9CA3AF; font-weight: 500; }
+  .nav-item.active .material-icons-round { color: #6366F1; }
+  .nav-item.active span:last-child { color: #6366F1; }
+  .nav-badge-wrapper { position: relative; }
+  .nav-badge { position: absolute; top: -4px; right: -8px; background: #EF4444; color: white; font-size: 9px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span>9:41</span><div class="status-icons"><span class="material-icons-round" style="font-size:17px">signal_cellular_alt</span><span class="material-icons-round" style="font-size:17px">wifi</span><span class="material-icons-round" style="font-size:17px">battery_full</span></div></div>
+  <div class="app-bar"><h1>Projects</h1></div>
+  <div class="content">
+    <div class="project-card">
+      <div class="project-avatar" style="background:#6366F1">M</div>
+      <div class="project-info"><div class="project-name">Mobile App Redesign</div><div class="project-desc">Redesign the mobile app with Material 3</div><div class="project-meta"><span class="project-meta-item"><span class="material-icons-round">group</span> 5 members</span><span class="project-meta-item"><span class="material-icons-round">task</span> 12 tasks</span></div></div>
+      <div class="project-chevron"><span class="material-icons-round">chevron_right</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-avatar" style="background:#8B5CF6">B</div>
+      <div class="project-info"><div class="project-name">Backend API v2</div><div class="project-desc">Migrate REST APIs to GraphQL</div><div class="project-meta"><span class="project-meta-item"><span class="material-icons-round">group</span> 3 members</span><span class="project-meta-item"><span class="material-icons-round">task</span> 8 tasks</span></div></div>
+      <div class="project-chevron"><span class="material-icons-round">chevron_right</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-avatar" style="background:#3B82F6">D</div>
+      <div class="project-info"><div class="project-name">Design System</div><div class="project-desc">Build a unified component library</div><div class="project-meta"><span class="project-meta-item"><span class="material-icons-round">group</span> 7 members</span><span class="project-meta-item"><span class="material-icons-round">task</span> 20 tasks</span></div></div>
+      <div class="project-chevron"><span class="material-icons-round">chevron_right</span></div>
+    </div>
+    <div class="project-card" style="opacity:0.6">
+      <div class="project-avatar" style="background:#9CA3AF">L</div>
+      <div class="project-info"><div class="project-name" style="display:flex;align-items:center;gap:8px">Legacy Dashboard <span class="archived-badge">Archived</span></div><div class="project-desc">Old dashboard — deprecated</div><div class="project-meta"><span class="project-meta-item"><span class="material-icons-round">group</span> 2 members</span><span class="project-meta-item"><span class="material-icons-round">task</span> 15 tasks</span></div></div>
+      <div class="project-chevron"><span class="material-icons-round">chevron_right</span></div>
+    </div>
+  </div>
+  <button class="fab"><span class="material-icons-round">add</span></button>
+  <div class="bottom-nav">
+    <div class="nav-item"><span class="material-icons-round">dashboard</span><span>Dashboard</span></div>
+    <div class="nav-item active"><span class="material-icons-round">folder</span><span>Projects</span></div>
+    <div class="nav-item"><div class="nav-badge-wrapper"><span class="material-icons-round">notifications</span><div class="nav-badge">3</div></div><span>Notifications</span></div>
+    <div class="nav-item"><span class="material-icons-round">settings</span><span>Settings</span></div>
+  </div>
+</div>
+</body>
+</html>

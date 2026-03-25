@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empty States - Task Management App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #E5E7EB; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; gap: 24px; flex-wrap: wrap; }
+  .phone-frame { width: 390px; height: 600px; background: #F9FAFB; border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.15); border: 8px solid #1a1a1a; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; }
+  .frame-label { text-align: center; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 12px; }
+  .empty-icon { width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .empty-icon .material-icons-round { font-size: 48px; }
+  .empty-title { font-size: 18px; font-weight: 600; color: #111827; margin-bottom: 8px; text-align: center; }
+  .empty-subtitle { font-size: 14px; color: #6B7280; text-align: center; line-height: 1.5; margin-bottom: 20px; }
+  .empty-btn { background: #6366F1; color: white; border: none; border-radius: 10px; padding: 12px 24px; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+  .empty-btn .material-icons-round { font-size: 18px; }
+  .float-animation { animation: float 3s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</head>
+<body>
+<!-- Empty Tasks -->
+<div>
+<div class="frame-label">No Tasks</div>
+<div class="phone-frame">
+  <div class="empty-icon float-animation" style="background:rgba(99,102,241,0.08)"><span class="material-icons-round" style="color:#6366F1">inbox</span></div>
+  <div class="empty-title">No tasks yet</div>
+  <div class="empty-subtitle">Create your first task to get started with tracking your work</div>
+  <button class="empty-btn"><span class="material-icons-round">add</span> Create Task</button>
+</div>
+</div>
+
+<!-- Empty Projects -->
+<div>
+<div class="frame-label">No Projects</div>
+<div class="phone-frame">
+  <div class="empty-icon float-animation" style="background:rgba(139,92,246,0.08)"><span class="material-icons-round" style="color:#8B5CF6">folder_open</span></div>
+  <div class="empty-title">No projects yet</div>
+  <div class="empty-subtitle">Create a project to organize your tasks and collaborate with your team</div>
+  <button class="empty-btn"><span class="material-icons-round">create_new_folder</span> New Project</button>
+</div>
+</div>
+
+<!-- Empty Notifications -->
+<div>
+<div class="frame-label">No Notifications</div>
+<div class="phone-frame">
+  <div class="empty-icon float-animation" style="background:rgba(16,185,129,0.08)"><span class="material-icons-round" style="color:#10B981">notifications_none</span></div>
+  <div class="empty-title">You're all caught up!</div>
+  <div class="empty-subtitle">No new notifications. We'll let you know when something needs your attention.</div>
+</div>
+</div>
+
+<!-- No Search Results -->
+<div>
+<div class="frame-label">No Search Results</div>
+<div class="phone-frame">
+  <div class="empty-icon float-animation" style="background:rgba(245,158,11,0.08)"><span class="material-icons-round" style="color:#F59E0B">search_off</span></div>
+  <div class="empty-title">No results found</div>
+  <div class="empty-subtitle">Try adjusting your search terms or removing some filters</div>
+</div>
+</div>
+
+<!-- No Attachments -->
+<div>
+<div class="frame-label">No Attachments</div>
+<div class="phone-frame">
+  <div class="empty-icon float-animation" style="background:rgba(59,130,246,0.08)"><span class="material-icons-round" style="color:#3B82F6">attach_file</span></div>
+  <div class="empty-title">No files attached</div>
+  <div class="empty-subtitle">Attach files, images, or documents to keep everything in one place</div>
+  <button class="empty-btn"><span class="material-icons-round">upload_file</span> Upload File</button>
+</div>
+</div>
+
+<!-- Empty Kanban Column -->
+<div>
+<div class="frame-label">Empty Kanban Column</div>
+<div class="phone-frame">
+  <div class="empty-icon float-animation" style="background:rgba(107,114,128,0.08)"><span class="material-icons-round" style="color:#6B7280">view_column</span></div>
+  <div class="empty-title">Column is empty</div>
+  <div class="empty-subtitle">Drag tasks here or create a new one to populate this column</div>
+</div>
+</div>
+</body>
+</html>

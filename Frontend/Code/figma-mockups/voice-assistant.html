@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Assistant - Task Management App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #E5E7EB; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; }
+  .phone-frame { width: 390px; height: 844px; background: #F9FAFB; border-radius: 40px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.15); border: 8px solid #1a1a1a; display: flex; flex-direction: column; }
+  .overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; flex-direction: column; justify-content: flex-end; z-index: 10; }
+  .voice-sheet { background: white; border-radius: 24px 24px 0 0; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  .sheet-handle { width: 36px; height: 4px; background: #D1D5DB; border-radius: 2px; }
+  .sheet-title { font-size: 18px; font-weight: 600; color: #111827; }
+  .sheet-subtitle { font-size: 14px; color: #6B7280; text-align: center; margin-top: -16px; }
+  .waveform { display: flex; align-items: center; justify-content: center; gap: 3px; height: 60px; width: 240px; }
+  .wave-bar { width: 4px; border-radius: 2px; background: #6366F1; animation: wave 1s ease-in-out infinite; }
+  @keyframes wave { 0%, 100% { height: 8px; opacity: 0.4; } 50% { height: 40px; opacity: 1; } }
+  .wave-bar:nth-child(1) { animation-delay: 0s; }
+  .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+  .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+  .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+  .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+  .wave-bar:nth-child(6) { animation-delay: 0.5s; }
+  .wave-bar:nth-child(7) { animation-delay: 0.6s; }
+  .wave-bar:nth-child(8) { animation-delay: 0.7s; }
+  .wave-bar:nth-child(9) { animation-delay: 0.3s; }
+  .wave-bar:nth-child(10) { animation-delay: 0.15s; }
+  .wave-bar:nth-child(11) { animation-delay: 0.45s; }
+  .wave-bar:nth-child(12) { animation-delay: 0.55s; }
+  .wave-bar:nth-child(13) { animation-delay: 0.25s; }
+  .wave-bar:nth-child(14) { animation-delay: 0.35s; }
+  .wave-bar:nth-child(15) { animation-delay: 0.65s; }
+  .mic-btn { width: 72px; height: 72px; border-radius: 50%; background: #6366F1; border: none; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 8px rgba(99,102,241,0.15), 0 0 0 16px rgba(99,102,241,0.08); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 8px rgba(99,102,241,0.15), 0 0 0 16px rgba(99,102,241,0.08); } 50% { box-shadow: 0 0 0 12px rgba(99,102,241,0.2), 0 0 0 24px rgba(99,102,241,0.1); } }
+  .mic-btn .material-icons-round { font-size: 32px; color: white; }
+  .transcript-box { width: 100%; background: #F3F4F6; border-radius: 12px; padding: 14px; min-height: 60px; }
+  .transcript-label { font-size: 11px; font-weight: 600; color: #6B7280; text-transform: uppercase; margin-bottom: 6px; }
+  .transcript-text { font-size: 14px; color: #111827; line-height: 1.5; }
+  .transcript-cursor { display: inline-block; width: 2px; height: 16px; background: #6366F1; animation: blink 1s step-end infinite; vertical-align: text-bottom; margin-left: 2px; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .voice-actions { display: flex; gap: 12px; width: 100%; padding-bottom: 16px; }
+  .voice-btn { flex: 1; padding: 14px; border-radius: 10px; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif; border: none; cursor: pointer; }
+  .voice-btn.cancel { background: #F3F4F6; color: #6B7280; }
+  .voice-btn.process { background: #6366F1; color: white; }
+  .listening-text { font-size: 13px; color: #6366F1; font-weight: 500; }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="overlay">
+    <div class="voice-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-title">Voice Task Creator</div>
+      <div class="sheet-subtitle">Describe your task and AI will parse it</div>
+      <div class="waveform">
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+      </div>
+      <button class="mic-btn"><span class="material-icons-round">mic</span></button>
+      <div class="listening-text">Listening...</div>
+      <div class="transcript-box">
+        <div class="transcript-label">Transcript</div>
+        <div class="transcript-text">Create a high priority task to fix the login bug and assign it to John due tomorrow<span class="transcript-cursor"></span></div>
+      </div>
+      <div class="voice-actions">
+        <button class="voice-btn cancel">Cancel</button>
+        <button class="voice-btn process">Process with AI</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

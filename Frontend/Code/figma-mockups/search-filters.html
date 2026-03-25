@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Filters - Task Management App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #E5E7EB; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; }
+  .phone-frame { width: 390px; height: 844px; background: #F9FAFB; border-radius: 40px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.15); border: 8px solid #1a1a1a; display: flex; flex-direction: column; }
+  .overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; flex-direction: column; justify-content: flex-end; z-index: 10; }
+  .filter-sheet { background: white; border-radius: 24px 24px 0 0; padding: 24px; max-height: 80%; overflow-y: auto; }
+  .sheet-handle { width: 36px; height: 4px; background: #D1D5DB; border-radius: 2px; margin: 0 auto 16px; }
+  .sheet-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .sheet-title { font-size: 18px; font-weight: 600; color: #111827; }
+  .reset-btn { font-size: 13px; color: #6366F1; font-weight: 500; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .filter-section { margin-bottom: 24px; }
+  .filter-label { font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 10px; }
+  .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filter-chip { padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; border: 1px solid #E5E7EB; background: white; color: #6B7280; cursor: pointer; }
+  .filter-chip.selected { background: #6366F1; color: white; border-color: #6366F1; }
+  .filter-chip.selected-status-todo { background: #F3F4F6; color: #6B7280; border-color: #6B7280; }
+  .filter-chip.selected-status-progress { background: #EFF6FF; color: #3B82F6; border-color: #3B82F6; }
+  .filter-chip.selected-priority-high { background: #FFF7ED; color: #F97316; border-color: #F97316; }
+  .assignee-list { display: flex; flex-direction: column; gap: 8px; }
+  .assignee-option { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 10px; border: 1px solid #E5E7EB; background: white; }
+  .assignee-option.selected { border-color: #6366F1; background: rgba(99,102,241,0.04); }
+  .assignee-avatar { width: 32px; height: 32px; border-radius: 50%; color: white; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .assignee-name { font-size: 14px; color: #111827; flex: 1; }
+  .check-icon { font-size: 20px; color: #6366F1; }
+  .date-range { display: flex; gap: 10px; }
+  .date-input { flex: 1; background: white; border: 1.5px solid #E5E7EB; border-radius: 10px; padding: 12px; font-size: 13px; font-family: 'Inter', sans-serif; color: #111827; }
+  .date-input::placeholder { color: #9CA3AF; }
+  .apply-btn { width: 100%; padding: 16px; border-radius: 10px; background: #6366F1; color: white; border: none; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; margin-top: 8px; margin-bottom: 16px; }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="overlay">
+    <div class="filter-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header"><span class="sheet-title">Filters</span><button class="reset-btn">Reset all</button></div>
+      <div class="filter-section">
+        <div class="filter-label">Status</div>
+        <div class="filter-chips">
+          <div class="filter-chip selected-status-todo">To Do</div>
+          <div class="filter-chip selected-status-progress">In Progress</div>
+          <div class="filter-chip">Under Review</div>
+          <div class="filter-chip">Done</div>
+          <div class="filter-chip">Archived</div>
+        </div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-label">Priority</div>
+        <div class="filter-chips">
+          <div class="filter-chip">Low</div>
+          <div class="filter-chip">Medium</div>
+          <div class="filter-chip selected-priority-high">High</div>
+          <div class="filter-chip">Urgent</div>
+        </div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-label">Assignee</div>
+        <div class="assignee-list">
+          <div class="assignee-option selected"><div class="assignee-avatar" style="background:#6366F1">JD</div><span class="assignee-name">John Doe</span><span class="material-icons-round check-icon">check_circle</span></div>
+          <div class="assignee-option"><div class="assignee-avatar" style="background:#8B5CF6">AK</div><span class="assignee-name">Alex Kim</span></div>
+          <div class="assignee-option"><div class="assignee-avatar" style="background:#3B82F6">SM</div><span class="assignee-name">Sara Miller</span></div>
+        </div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-label">Due Date Range</div>
+        <div class="date-range">
+          <input class="date-input" type="text" placeholder="From" value="Mar 20, 2026">
+          <input class="date-input" type="text" placeholder="To" value="Apr 10, 2026">
+        </div>
+      </div>
+      <button class="apply-btn">Apply Filters (5 results)</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

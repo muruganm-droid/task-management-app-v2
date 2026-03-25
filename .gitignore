@@ -1,0 +1,32 @@
+# Flutter
+Frontend/Code/build/
+Frontend/Code/.dart_tool/
+Frontend/Code/.flutter-plugins
+Frontend/Code/.flutter-plugins-dependencies
+Frontend/Code/ios/Pods/
+Frontend/Code/ios/.symlinks/
+Frontend/Code/ios/Flutter/Flutter.framework
+Frontend/Code/ios/Flutter/Flutter.podspec
+Frontend/Code/ios/Runner.xcworkspace/xcshareddata/
+Frontend/Code/macos/Flutter/GeneratedPluginRegistrant.swift
+Frontend/Code/.packages
+Frontend/Code/pubspec.lock
+
+# Backend
+Backend/Code/node_modules/
+Backend/Code/dist/
+Backend/Code/dev.db
+Backend/Code/prisma/dev.db
+Backend/Code/prisma/dev.db-journal
+Backend/Code/uploads/
+Backend/Code/.env
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Build
+*.pyc
+__pycache__/

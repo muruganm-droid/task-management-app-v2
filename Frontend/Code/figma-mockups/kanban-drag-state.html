@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanban Drag State - Task Management App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #E5E7EB; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; }
+  .phone-frame { width: 780px; height: 844px; background: #F9FAFB; border-radius: 40px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.15); border: 8px solid #1a1a1a; display: flex; flex-direction: column; }
+  .status-bar { height: 54px; padding: 14px 24px 0; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; color: #111827; flex-shrink: 0; }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .app-bar { padding: 8px 16px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .app-bar .material-icons-round { font-size: 24px; color: #111827; }
+  .app-bar h2 { font-size: 18px; font-weight: 600; color: #111827; flex: 1; }
+  .board { flex: 1; display: flex; gap: 12px; padding: 12px; overflow-x: auto; }
+  .column { flex: 0 0 170px; display: flex; flex-direction: column; }
+  .column-header { padding: 10px 12px; border-radius: 10px 10px 0 0; display: flex; align-items: center; justify-content: space-between; }
+  .column-header h3 { font-size: 12px; font-weight: 600; text-transform: uppercase; }
+  .column-count { width: 20px; height: 20px; border-radius: 6px; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .col-todo .column-header { background: #F3F4F6; } .col-todo .column-header h3 { color: #6B7280; } .col-todo .column-count { background: #E5E7EB; color: #6B7280; }
+  .col-progress .column-header { background: #EFF6FF; } .col-progress .column-header h3 { color: #3B82F6; } .col-progress .column-count { background: #BFDBFE; color: #3B82F6; }
+  .col-review .column-header { background: #FFFBEB; } .col-review .column-header h3 { color: #F59E0B; } .col-review .column-count { background: #FDE68A; color: #D97706; }
+  .col-done .column-header { background: #ECFDF5; } .col-done .column-header h3 { color: #10B981; } .col-done .column-count { background: #A7F3D0; color: #059669; }
+  .column-tasks { flex: 1; padding: 8px 0; min-height: 100px; }
+  .task-card { background: white; border: 1px solid #E5E7EB; border-radius: 10px; padding: 10px; margin-bottom: 8px; display: flex; gap: 8px; }
+  .grip { color: #D1D5DB; display: flex; align-items: center; cursor: grab; }
+  .grip .material-icons-round { font-size: 16px; }
+  .task-content { flex: 1; }
+  .task-title { font-size: 12px; font-weight: 600; color: #111827; margin-bottom: 4px; }
+  .task-meta { display: flex; align-items: center; gap: 4px; }
+  .priority-badge { padding: 1px 6px; border-radius: 4px; font-size: 9px; font-weight: 600; text-transform: uppercase; }
+  .priority-high { background: #FFF7ED; color: #F97316; border: 1px solid #FDBA74; }
+  .priority-critical { background: #FEF2F2; color: #EF4444; border: 1px solid #FCA5A5; }
+  .priority-medium { background: #FFFBEB; color: #F59E0B; border: 1px solid #FCD34D; }
+  .priority-low { background: #ECFDF5; color: #10B981; border: 1px solid #6EE7B7; }
+  /* Dragging state */
+  .task-card.dragging { background: #EEF2FF; border: 2px solid #6366F1; transform: rotate(-2deg); box-shadow: 0 8px 24px rgba(99,102,241,0.25); opacity: 0.95; z-index: 10; }
+  .task-card.ghost { background: #F3F4F6; border: 2px dashed #D1D5DB; opacity: 0.4; }
+  .drop-zone { border: 2px dashed #6366F1; border-radius: 10px; background: rgba(99,102,241,0.05); min-height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+  .drop-zone-text { font-size: 11px; color: #6366F1; font-weight: 500; }
+  .column.drop-active { background: rgba(99,102,241,0.03); border-radius: 0 0 10px 10px; }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span>9:41</span><div class="status-icons"><span class="material-icons-round" style="font-size:17px">signal_cellular_alt</span><span class="material-icons-round" style="font-size:17px">wifi</span><span class="material-icons-round" style="font-size:17px">battery_full</span></div></div>
+  <div class="app-bar"><span class="material-icons-round">arrow_back</span><h2>Mobile App Redesign — Drag & Drop</h2></div>
+  <div class="board">
+    <!-- TO DO -->
+    <div class="column col-todo">
+      <div class="column-header"><h3>To Do</h3><span class="column-count">2</span></div>
+      <div class="column-tasks">
+        <div class="task-card ghost"><div class="grip"><span class="material-icons-round">drag_indicator</span></div><div class="task-content"><div class="task-title">Setup CI/CD pipeline</div><div class="task-meta"><span class="priority-badge priority-high">HIGH</span></div></div></div>
+        <div class="task-card"><div class="grip"><span class="material-icons-round">drag_indicator</span></div><div class="task-content"><div class="task-title">Write API docs</div><div class="task-meta"><span class="priority-badge priority-low">LOW</span></div></div></div>
+      </div>
+    </div>
+    <!-- IN PROGRESS (drop target) -->
+    <div class="column col-progress">
+      <div class="column-header"><h3>In Progress</h3><span class="column-count">2</span></div>
+      <div class="column-tasks column.drop-active">
+        <div class="task-card"><div class="grip"><span class="material-icons-round">drag_indicator</span></div><div class="task-content"><div class="task-title">Implement auth flow</div><div class="task-meta"><span class="priority-badge priority-critical">CRITICAL</span></div></div></div>
+        <div class="drop-zone"><span class="drop-zone-text">Drop here</span></div>
+        <div class="task-card"><div class="grip"><span class="material-icons-round">drag_indicator</span></div><div class="task-content"><div class="task-title">Build notifications</div><div class="task-meta"><span class="priority-badge priority-high">HIGH</span></div></div></div>
+      </div>
+    </div>
+    <!-- UNDER REVIEW -->
+    <div class="column col-review">
+      <div class="column-header"><h3>Under Review</h3><span class="column-count">1</span></div>
+      <div class="column-tasks">
+        <div class="task-card"><div class="grip"><span class="material-icons-round">drag_indicator</span></div><div class="task-content"><div class="task-title">Dark mode theme</div><div class="task-meta"><span class="priority-badge priority-medium">MEDIUM</span></div></div></div>
+      </div>
+    </div>
+    <!-- DONE -->
+    <div class="column col-done">
+      <div class="column-header"><h3>Done</h3><span class="column-count">2</span></div>
+      <div class="column-tasks">
+        <div class="task-card"><div class="grip"><span class="material-icons-round">drag_indicator</span></div><div class="task-content"><div class="task-title">Project setup</div><div class="task-meta"><span class="priority-badge priority-medium">MEDIUM</span></div></div></div>
+        <div class="task-card"><div class="grip"><span class="material-icons-round">drag_indicator</span></div><div class="task-content"><div class="task-title">Design system tokens</div><div class="task-meta"><span class="priority-badge priority-low">LOW</span></div></div></div>
+      </div>
+    </div>
+  </div>
+  <!-- Floating dragged card -->
+  <div class="task-card dragging" style="position:absolute;top:280px;left:200px;width:160px;z-index:20">
+    <div class="grip"><span class="material-icons-round">drag_indicator</span></div>
+    <div class="task-content"><div class="task-title">Setup CI/CD pipeline</div><div class="task-meta"><span class="priority-badge priority-high">HIGH</span></div></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings - Task Management App (Dark)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #1a1a1a; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; }
+
+  .phone-frame {
+    width: 390px; min-height: 844px; background: #121212; border-radius: 40px;
+    overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    border: 8px solid #000; display: flex; flex-direction: column;
+  }
+  .status-bar { height: 54px; padding: 14px 24px 0; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; color: #F3F4F6; flex-shrink: 0; }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .app-bar { height: 56px; padding: 0 20px; display: flex; align-items: center; flex-shrink: 0; }
+  .app-bar h1 { font-size: 22px; font-weight: 700; color: #F3F4F6; }
+
+  .content { flex: 1; padding: 0 20px 20px; }
+
+  .profile-header { text-align: center; margin-bottom: 24px; }
+  .avatar-large { width: 80px; height: 80px; border-radius: 50%; background: #6366F1; color: white; font-size: 32px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
+  .profile-email { font-size: 14px; color: #6B7280; }
+
+  .section-label { font-size: 13px; font-weight: 600; color: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; margin-top: 24px; }
+  .input-group { margin-bottom: 14px; }
+  .input-label { font-size: 13px; font-weight: 500; color: #D1D5DB; margin-bottom: 6px; }
+  .input-field { width: 100%; background: #1E1E1E; border: 1.5px solid #2A2A2A; border-radius: 10px; padding: 12px 14px; font-size: 14px; font-family: 'Inter', sans-serif; color: #F3F4F6; outline: none; }
+  .input-field::placeholder { color: #6B7280; }
+  textarea.input-field { height: 72px; resize: none; }
+  .input-wrapper { position: relative; }
+  .input-wrapper .material-icons-round { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #6B7280; font-size: 20px; }
+
+  .save-btn { width: 100%; background: #6366F1; color: white; border: none; border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 600; font-family: 'Inter'; margin-top: 4px; text-align: center; }
+  .change-password-btn { width: 100%; background: #4F46E5; color: white; border: none; border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 600; font-family: 'Inter'; margin-top: 4px; text-align: center; }
+  .divider { height: 1px; background: #1a1a1a; margin: 24px 0; }
+  .logout-btn { width: 100%; background: #1E1E1E; color: #EF4444; border: 2px solid #EF4444; border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 600; font-family: 'Inter'; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .logout-btn .material-icons-round { font-size: 20px; }
+
+  .bottom-nav { height: 64px; background: #1E1E1E; border-top: 1px solid #2A2A2A; display: flex; justify-content: space-around; align-items: center; padding-bottom: 8px; flex-shrink: 0; margin-top: auto; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .nav-item .material-icons-round { font-size: 24px; color: #6B7280; }
+  .nav-item span:last-child { font-size: 11px; color: #6B7280; font-weight: 500; }
+  .nav-item.active .material-icons-round { color: #6366F1; }
+  .nav-item.active span:last-child { color: #6366F1; }
+  .nav-badge-wrapper { position: relative; }
+  .nav-badge { position: absolute; top: -4px; right: -8px; background: #EF4444; color: white; font-size: 9px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span>9:41</span><div class="status-icons"><span class="material-icons-round" style="font-size:17px">signal_cellular_alt</span><span class="material-icons-round" style="font-size:17px">wifi</span><span class="material-icons-round" style="font-size:17px">battery_full</span></div></div>
+  <div class="app-bar"><h1>Settings</h1></div>
+  <div class="content">
+    <div class="profile-header"><div class="avatar-large">JD</div><div class="profile-email">john@example.com</div></div>
+
+    <div class="section-label">Profile</div>
+    <div class="input-group"><div class="input-label">Name</div><input type="text" class="input-field" value="John Doe"></div>
+    <div class="input-group"><div class="input-label">Bio</div><textarea class="input-field" placeholder="Tell us about yourself">Full-stack developer passionate about building great products.</textarea></div>
+    <button class="save-btn">Save Profile</button>
+
+    <div class="section-label">Change Password</div>
+    <div class="input-group"><div class="input-label">Current Password</div><div class="input-wrapper"><input type="password" class="input-field" value="password123"><span class="material-icons-round">visibility_off</span></div></div>
+    <div class="input-group"><div class="input-label">New Password</div><div class="input-wrapper"><input type="password" class="input-field" placeholder="Enter new password"><span class="material-icons-round">visibility_off</span></div></div>
+    <div class="input-group"><div class="input-label">Confirm Password</div><div class="input-wrapper"><input type="password" class="input-field" placeholder="Confirm new password"><span class="material-icons-round">visibility_off</span></div></div>
+    <button class="change-password-btn">Change Password</button>
+
+    <div class="divider"></div>
+    <button class="logout-btn"><span class="material-icons-round">logout</span> Log Out</button>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item"><span class="material-icons-round">dashboard</span><span>Dashboard</span></div>
+    <div class="nav-item"><span class="material-icons-round">folder</span><span>Projects</span></div>
+    <div class="nav-item"><div class="nav-badge-wrapper"><span class="material-icons-round">notifications</span><div class="nav-badge">3</div></div><span>Notifications</span></div>
+    <div class="nav-item active"><span class="material-icons-round">settings</span><span>Settings</span></div>
+  </div>
+</div>
+</body>
+</html>

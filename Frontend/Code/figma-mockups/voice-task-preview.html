@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Task Preview - Task Management App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #E5E7EB; display: flex; justify-content: center; align-items: flex-start; padding: 40px 0; min-height: 100vh; }
+  .phone-frame { width: 390px; height: 844px; background: #F9FAFB; border-radius: 40px; overflow: hidden; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.15); border: 8px solid #1a1a1a; display: flex; flex-direction: column; }
+  .overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; flex-direction: column; justify-content: flex-end; z-index: 10; }
+  .preview-sheet { background: white; border-radius: 24px 24px 0 0; padding: 24px; }
+  .sheet-handle { width: 36px; height: 4px; background: #D1D5DB; border-radius: 2px; margin: 0 auto 16px; }
+  .sheet-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .ai-icon { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, #6366F1, #8B5CF6); display: flex; align-items: center; justify-content: center; }
+  .ai-icon .material-icons-round { font-size: 20px; color: white; }
+  .sheet-title { font-size: 16px; font-weight: 600; color: #111827; }
+  .sheet-subtitle { font-size: 12px; color: #6B7280; }
+  .preview-card { background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+  .field-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #F3F4F6; }
+  .field-row:last-child { border-bottom: none; }
+  .field-icon { width: 28px; height: 28px; border-radius: 8px; background: rgba(99,102,241,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .field-icon .material-icons-round { font-size: 16px; color: #6366F1; }
+  .field-content { flex: 1; }
+  .field-label { font-size: 11px; font-weight: 600; color: #6B7280; text-transform: uppercase; margin-bottom: 2px; }
+  .field-value { font-size: 14px; color: #111827; font-weight: 500; }
+  .priority-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; background: #FFF7ED; color: #F97316; border: 1px solid #FDBA74; }
+  .assignee-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: white; border: 1px solid #E5E7EB; border-radius: 8px; }
+  .assignee-avatar { width: 20px; height: 20px; border-radius: 50%; background: #6366F1; color: white; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .assignee-name { font-size: 12px; color: #111827; font-weight: 500; }
+  .preview-actions { display: flex; gap: 10px; padding-bottom: 16px; }
+  .action-btn { flex: 1; padding: 14px; border-radius: 10px; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif; border: none; cursor: pointer; text-align: center; }
+  .action-btn.cancel { background: #F3F4F6; color: #6B7280; }
+  .action-btn.edit { background: white; color: #6366F1; border: 1.5px solid #6366F1; }
+  .action-btn.confirm { background: #6366F1; color: white; }
+</style>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="overlay">
+    <div class="preview-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div class="ai-icon"><span class="material-icons-round">auto_awesome</span></div>
+        <div><div class="sheet-title">AI Parsed Task</div><div class="sheet-subtitle">Review and confirm the extracted details</div></div>
+      </div>
+      <div class="preview-card">
+        <div class="field-row"><div class="field-icon"><span class="material-icons-round">title</span></div><div class="field-content"><div class="field-label">Title</div><div class="field-value">Fix the login bug</div></div></div>
+        <div class="field-row"><div class="field-icon"><span class="material-icons-round">description</span></div><div class="field-content"><div class="field-label">Description</div><div class="field-value" style="font-weight:400;color:#374151">Fix the login bug that is causing authentication issues</div></div></div>
+        <div class="field-row"><div class="field-icon"><span class="material-icons-round">flag</span></div><div class="field-content"><div class="field-label">Priority</div><span class="priority-badge">HIGH</span></div></div>
+        <div class="field-row"><div class="field-icon"><span class="material-icons-round">calendar_today</span></div><div class="field-content"><div class="field-label">Due Date</div><div class="field-value">Mar 26, 2026</div></div></div>
+        <div class="field-row"><div class="field-icon"><span class="material-icons-round">person</span></div><div class="field-content"><div class="field-label">Assignee</div><div class="assignee-chip"><div class="assignee-avatar">JD</div><span class="assignee-name">John Doe</span></div></div></div>
+      </div>
+      <div class="preview-actions">
+        <button class="action-btn cancel">Cancel</button>
+        <button class="action-btn edit">Edit</button>
+        <button class="action-btn confirm">Create Task</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
