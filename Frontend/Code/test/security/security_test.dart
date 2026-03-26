@@ -10,7 +10,6 @@ import 'package:task_management_app/data/api/api_exception.dart';
 import 'package:task_management_app/data/models/user.dart';
 import 'package:task_management_app/data/models/auth_response.dart';
 import 'package:task_management_app/presentation/viewmodels/auth_viewmodel.dart';
-import '../helpers/test_helpers.dart';
 
 void main() {
   group('SEC-001: API configuration security', () {
@@ -122,6 +121,7 @@ void main() {
         isAuthenticated: true,
         user: null, // Would be a user in real scenario
       );
+      expect(authenticated.isAuthenticated, true);
       const loggedOut = AuthState();
       expect(loggedOut.isAuthenticated, false);
       expect(loggedOut.user, isNull);
@@ -144,10 +144,11 @@ void main() {
   group('SEC-007: Token handling patterns', () {
     test('Null token check pattern works', () {
       String? token;
-      expect(token != null, false);
+      expect(token, isNull);
 
       token = 'valid-token';
-      expect(token != null, true);
+      expect(token, isNotNull);
+      expect(token, equals('valid-token'));
     });
 
     test('Bearer token format', () {

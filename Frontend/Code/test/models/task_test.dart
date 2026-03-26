@@ -5,7 +5,7 @@ import 'package:task_management_app/data/models/attachment.dart';
 void main() {
   // ─── Shared fixture data ─────────────────────────────────────────────────
 
-  Map<String, dynamic> _baseTaskJson() => {
+  Map<String, dynamic> baseTaskJson() => {
         'id': 'task-001',
         'projectId': 'proj-001',
         'title': 'Fix login bug',
@@ -46,7 +46,7 @@ void main() {
 
   group('Task.fromJson', () {
     test('parses all camelCase fields correctly', () {
-      final task = Task.fromJson(_baseTaskJson());
+      final task = Task.fromJson(baseTaskJson());
 
       expect(task.id, 'task-001');
       expect(task.projectId, 'proj-001');
@@ -64,7 +64,7 @@ void main() {
     });
 
     test('parses subTasks list', () {
-      final task = Task.fromJson(_baseTaskJson());
+      final task = Task.fromJson(baseTaskJson());
 
       expect(task.subTasks.length, 1);
       expect(task.subTasks.first.id, 'sub-001');
@@ -73,7 +73,7 @@ void main() {
     });
 
     test('parses attachments list', () {
-      final task = Task.fromJson(_baseTaskJson());
+      final task = Task.fromJson(baseTaskJson());
 
       expect(task.attachments.length, 1);
       expect(task.attachments.first.id, 'att-001');
@@ -107,35 +107,35 @@ void main() {
     });
 
     test('dueDate is null when both dueDate and due_date are absent', () {
-      final json = Map<String, dynamic>.from(_baseTaskJson())
+      final json = Map<String, dynamic>.from(baseTaskJson())
         ..remove('dueDate');
       final task = Task.fromJson(json);
       expect(task.dueDate, isNull);
     });
 
     test('position defaults to 0 when absent', () {
-      final json = Map<String, dynamic>.from(_baseTaskJson())
+      final json = Map<String, dynamic>.from(baseTaskJson())
         ..remove('position');
       final task = Task.fromJson(json);
       expect(task.position, 0);
     });
 
     test('attachments defaults to empty list when absent', () {
-      final json = Map<String, dynamic>.from(_baseTaskJson())
+      final json = Map<String, dynamic>.from(baseTaskJson())
         ..remove('attachments');
       final task = Task.fromJson(json);
       expect(task.attachments, isEmpty);
     });
 
     test('assigneeIds defaults to empty list when absent', () {
-      final json = Map<String, dynamic>.from(_baseTaskJson())
+      final json = Map<String, dynamic>.from(baseTaskJson())
         ..remove('assigneeIds');
       final task = Task.fromJson(json);
       expect(task.assigneeIds, isEmpty);
     });
 
     test('description can be null', () {
-      final json = Map<String, dynamic>.from(_baseTaskJson())
+      final json = Map<String, dynamic>.from(baseTaskJson())
         ..remove('description');
       final task = Task.fromJson(json);
       expect(task.description, isNull);
@@ -148,7 +148,7 @@ void main() {
     late Task original;
 
     setUp(() {
-      original = Task.fromJson(_baseTaskJson());
+      original = Task.fromJson(baseTaskJson());
     });
 
     test('returns a new Task with updated title', () {
@@ -206,7 +206,7 @@ void main() {
   // ─── Task.isOverdue ───────────────────────────────────────────────────────
 
   group('Task.isOverdue', () {
-    Task _makeTask({
+    Task makeTask({
       required DateTime? dueDate,
       required TaskStatus status,
     }) {
@@ -224,7 +224,7 @@ void main() {
     }
 
     test('is overdue when dueDate is in the past and status is todo', () {
-      final task = _makeTask(
+      final task = makeTask(
         dueDate: DateTime.now().subtract(const Duration(days: 1)),
         status: TaskStatus.todo,
       );
@@ -232,7 +232,7 @@ void main() {
     });
 
     test('is overdue when dueDate is in the past and status is inProgress', () {
-      final task = _makeTask(
+      final task = makeTask(
         dueDate: DateTime.now().subtract(const Duration(hours: 1)),
         status: TaskStatus.inProgress,
       );
@@ -240,7 +240,7 @@ void main() {
     });
 
     test('is NOT overdue when status is done', () {
-      final task = _makeTask(
+      final task = makeTask(
         dueDate: DateTime.now().subtract(const Duration(days: 5)),
         status: TaskStatus.done,
       );
@@ -248,7 +248,7 @@ void main() {
     });
 
     test('is NOT overdue when status is archived', () {
-      final task = _makeTask(
+      final task = makeTask(
         dueDate: DateTime.now().subtract(const Duration(days: 5)),
         status: TaskStatus.archived,
       );
@@ -256,7 +256,7 @@ void main() {
     });
 
     test('is NOT overdue when dueDate is in the future', () {
-      final task = _makeTask(
+      final task = makeTask(
         dueDate: DateTime.now().add(const Duration(days: 7)),
         status: TaskStatus.todo,
       );
@@ -264,7 +264,7 @@ void main() {
     });
 
     test('is NOT overdue when dueDate is null', () {
-      final task = _makeTask(dueDate: null, status: TaskStatus.todo);
+      final task = makeTask(dueDate: null, status: TaskStatus.todo);
       expect(task.isOverdue, isFalse);
     });
   });

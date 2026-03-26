@@ -15,15 +15,6 @@ final connectivityStreamProvider =
   return Connectivity().onConnectivityChanged;
 });
 
-// ─── Banner state notifier ────────────────────────────────────────────────────
-
-class _BannerState {
-  final ConnectivityStatus status;
-  final bool visible;
-
-  const _BannerState({required this.status, required this.visible});
-}
-
 // ─── ConnectivityBanner widget ────────────────────────────────────────────────
 
 class ConnectivityBanner extends ConsumerStatefulWidget {

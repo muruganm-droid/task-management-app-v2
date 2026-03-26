@@ -47,7 +47,7 @@ class _RocketLoaderState extends State<RocketLoader>
       height: 80,
       child: AnimatedBuilder(
         animation: _controller,
-        builder: (_, __) {
+        builder: (_, _) {
           return Stack(
             alignment: Alignment.center,
             children: [
@@ -166,7 +166,7 @@ class _PencilLoaderState extends State<PencilLoader>
     final isDark = context.isDark;
     return AnimatedBuilder(
       animation: _controller,
-      builder: (_, __) {
+      builder: (_, _) {
         return SizedBox(
           width: 80,
           height: 60,
@@ -220,7 +220,7 @@ class _TypingDotsLoaderState extends State<TypingDotsLoader>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (_, __) {
+      builder: (_, _) {
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: List.generate(3, (i) {

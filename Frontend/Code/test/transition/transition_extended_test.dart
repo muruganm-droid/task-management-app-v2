@@ -171,7 +171,7 @@ void main() {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (_, anim, __) => Scaffold(
+                    pageBuilder: (_, anim, _) => Scaffold(
                       body: RotationTransition(
                         turns: anim,
                         child: const Text('Rotated'),
@@ -203,7 +203,7 @@ void main() {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (_, anim, __) => Scaffold(
+                    pageBuilder: (_, anim, _) => Scaffold(
                       body: SizeTransition(
                         sizeFactor: anim,
                         child: const Text('Sized'),
@@ -235,7 +235,7 @@ void main() {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (_, anim, __) => Scaffold(
+                    pageBuilder: (_, anim, _) => Scaffold(
                       body: FadeTransition(
                         opacity: anim,
                         child: SlideTransition(

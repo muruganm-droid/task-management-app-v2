@@ -4,7 +4,7 @@ import 'package:task_management_app/data/models/analytics.dart';
 void main() {
   // ─── Shared fixture ───────────────────────────────────────────────────────
 
-  Map<String, dynamic> _fullAnalyticsJson() => {
+  Map<String, dynamic> fullAnalyticsJson() => {
         'completionRate': 72,
         'totalTasks': 50,
         'completedTasks': 36,
@@ -58,7 +58,7 @@ void main() {
 
   group('Analytics.fromJson', () {
     test('parses top-level numeric fields', () {
-      final a = Analytics.fromJson(_fullAnalyticsJson());
+      final a = Analytics.fromJson(fullAnalyticsJson());
 
       expect(a.completionRate, 72);
       expect(a.totalTasks, 50);
@@ -68,7 +68,7 @@ void main() {
     });
 
     test('parses tasksByPriority list', () {
-      final a = Analytics.fromJson(_fullAnalyticsJson());
+      final a = Analytics.fromJson(fullAnalyticsJson());
 
       expect(a.tasksByPriority.length, 3);
       expect(a.tasksByPriority.first.priority, 'HIGH');
@@ -76,7 +76,7 @@ void main() {
     });
 
     test('parses tasksByStatus list', () {
-      final a = Analytics.fromJson(_fullAnalyticsJson());
+      final a = Analytics.fromJson(fullAnalyticsJson());
 
       expect(a.tasksByStatus.length, 3);
       expect(a.tasksByStatus[1].status, 'IN_PROGRESS');
@@ -84,7 +84,7 @@ void main() {
     });
 
     test('parses teamWorkload list', () {
-      final a = Analytics.fromJson(_fullAnalyticsJson());
+      final a = Analytics.fromJson(fullAnalyticsJson());
 
       expect(a.teamWorkload.length, 2);
       expect(a.teamWorkload.first.userId, 'user-001');
@@ -95,7 +95,7 @@ void main() {
     });
 
     test('parses weeklyStats list', () {
-      final a = Analytics.fromJson(_fullAnalyticsJson());
+      final a = Analytics.fromJson(fullAnalyticsJson());
 
       expect(a.weeklyStats.length, 2);
       expect(a.weeklyStats.first.weekStart, '2025-05-05');

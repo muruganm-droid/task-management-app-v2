@@ -4,7 +4,7 @@ import 'package:task_management_app/data/models/search_result.dart';
 void main() {
   // ─── Minimal task JSON helper ─────────────────────────────────────────────
 
-  Map<String, dynamic> _taskJson({
+  Map<String, dynamic> taskJson({
     String id = 'task-001',
     String title = 'Test Task',
   }) =>
@@ -24,7 +24,7 @@ void main() {
         'updatedAt': '2025-01-01T00:00:00.000Z',
       };
 
-  Map<String, dynamic> _projectJson({
+  Map<String, dynamic> projectJson({
     String id = 'proj-001',
     String name = 'Test Project',
   }) =>
@@ -45,8 +45,8 @@ void main() {
     test('parses tasks list', () {
       final json = {
         'tasks': [
-          _taskJson(id: 'task-001', title: 'Fix bug'),
-          _taskJson(id: 'task-002', title: 'Write docs'),
+          taskJson(id: 'task-001', title: 'Fix bug'),
+          taskJson(id: 'task-002', title: 'Write docs'),
         ],
         'projects': <Map<String, dynamic>>[],
       };
@@ -64,8 +64,8 @@ void main() {
       final json = {
         'tasks': <Map<String, dynamic>>[],
         'projects': [
-          _projectJson(id: 'proj-001', name: 'Alpha'),
-          _projectJson(id: 'proj-002', name: 'Beta'),
+          projectJson(id: 'proj-001', name: 'Alpha'),
+          projectJson(id: 'proj-002', name: 'Beta'),
         ],
       };
 
@@ -80,8 +80,8 @@ void main() {
 
     test('parses both tasks and projects together', () {
       final json = {
-        'tasks': [_taskJson()],
-        'projects': [_projectJson()],
+        'tasks': [taskJson()],
+        'projects': [projectJson()],
       };
 
       final result = SearchResult.fromJson(json);
@@ -116,7 +116,7 @@ void main() {
     test('task fields are correctly mapped from nested JSON', () {
       final json = {
         'tasks': [
-          _taskJson(id: 'task-abc', title: 'Deploy to prod'),
+          taskJson(id: 'task-abc', title: 'Deploy to prod'),
         ],
         'projects': <Map<String, dynamic>>[],
       };
@@ -133,7 +133,7 @@ void main() {
       final json = {
         'tasks': <Map<String, dynamic>>[],
         'projects': [
-          _projectJson(id: 'proj-xyz', name: 'Gamma Release'),
+          projectJson(id: 'proj-xyz', name: 'Gamma Release'),
         ],
       };
 

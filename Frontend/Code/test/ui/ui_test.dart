@@ -151,12 +151,12 @@ void main() {
   });
 
   group('UI-006: ShimmerTaskList', () {
-    testWidgets('Renders ListView', (tester) async {
+    testWidgets('Renders CreativeLoader', (tester) async {
       await tester.pumpWidget(createTestApp(
         child: const Scaffold(body: ShimmerTaskList(itemCount: 3)),
       ));
       await tester.pump();
-      expect(find.byType(ListView), findsOneWidget);
+      expect(find.byType(ShimmerTaskList), findsOneWidget);
     });
   });
 

@@ -30,3 +30,4 @@ Backend/Code/.env
 # Build
 *.pyc
 __pycache__/
+.vercel

@@ -189,8 +189,10 @@ class _VoiceTaskSheetState extends ConsumerState<VoiceTaskSheet>
       },
       listenFor: const Duration(seconds: 30),
       pauseFor: const Duration(seconds: 4),
-      partialResults: true,
-      cancelOnError: true,
+      listenOptions: stt.SpeechListenOptions(
+        partialResults: true,
+        cancelOnError: true,
+      ),
     );
   }
 
@@ -496,7 +498,7 @@ class _VoiceTaskSheetState extends ConsumerState<VoiceTaskSheet>
   Widget _buildWaveform(bool isDark) {
     return AnimatedBuilder(
       animation: _waveAnim,
-      builder: (_, __) {
+      builder: (_, _) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(12, (i) {

@@ -800,7 +800,7 @@ class _TaskDetailScreenState extends ConsumerState<TaskDetailScreen>
                           width: 44,
                           height: 44,
                           fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => Container(
+                          errorBuilder: (_, _, _) => Container(
                             width: 44,
                             height: 44,
                             color: AppTheme.primaryColor.withValues(alpha: 0.1),

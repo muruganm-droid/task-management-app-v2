@@ -622,7 +622,7 @@ class _ProjectBoardScreenState extends ConsumerState<ProjectBoardScreen> {
       onDragEnd: (_) {
         setState(() => _draggingTask = null);
       },
-      onDraggableCanceled: (_, __) {
+      onDraggableCanceled: (_, _) {
         setState(() => _draggingTask = null);
       },
       // The widget shown while dragging (semi-transparent feedback)

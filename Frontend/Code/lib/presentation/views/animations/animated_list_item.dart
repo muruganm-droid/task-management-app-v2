@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../../core/utils/haptic_helper.dart';
 
 class AnimatedListItem extends StatefulWidget {

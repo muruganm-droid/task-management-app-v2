@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:intl/intl.dart';
@@ -206,12 +205,19 @@ class _AiChatScreenState extends ConsumerState<AiChatScreen>
     final hasTamil = RegExp(r'[\u0B80-\u0BFF]').hasMatch(text);
 
     String lang = 'en-US';
-    if (hasArabic) lang = 'ar-SA';
-    else if (hasChinese) lang = 'zh-CN';
-    else if (hasJapanese) lang = 'ja-JP';
-    else if (hasKorean) lang = 'ko-KR';
-    else if (hasHindi) lang = 'hi-IN';
-    else if (hasTamil) lang = 'ta-IN';
+    if (hasArabic) {
+      lang = 'ar-SA';
+    } else if (hasChinese) {
+      lang = 'zh-CN';
+    } else if (hasJapanese) {
+      lang = 'ja-JP';
+    } else if (hasKorean) {
+      lang = 'ko-KR';
+    } else if (hasHindi) {
+      lang = 'hi-IN';
+    } else if (hasTamil) {
+      lang = 'ta-IN';
+    }
 
     await _tts.setLanguage(lang);
     await _tts.speak(text);

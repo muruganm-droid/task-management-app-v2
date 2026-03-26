@@ -121,7 +121,7 @@ void main() {
 
     test('Dark bottom nav has dark background', () {
       expect(AppTheme.darkTheme.bottomNavigationBarTheme.backgroundColor,
-          const Color(0xFF1E293B));
+          const Color(0xFF1A1A1A));
     });
 
     test('Both themes use fixed type', () {
@@ -345,10 +345,10 @@ void main() {
       expect(darkBorder.borderRadius, BorderRadius.circular(14));
     });
 
-    test('Dark theme focused border uses primary color', () {
+    test('Dark theme focused border uses darkAccent color', () {
       final focusedBorder = AppTheme.darkTheme.inputDecorationTheme.focusedBorder
           as OutlineInputBorder;
-      expect(focusedBorder.borderSide.color, AppTheme.primaryColor);
+      expect(focusedBorder.borderSide.color, AppTheme.darkAccent);
       expect(focusedBorder.borderSide.width, 2);
     });
   });

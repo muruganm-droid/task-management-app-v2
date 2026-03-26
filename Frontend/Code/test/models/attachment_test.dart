@@ -4,7 +4,7 @@ import 'package:task_management_app/data/models/attachment.dart';
 void main() {
   // ─── Shared fixture ───────────────────────────────────────────────────────
 
-  Map<String, dynamic> _baseJson() => {
+  Map<String, dynamic> baseJson() => {
         'id': 'att-001',
         'taskId': 'task-001',
         'uploaderId': 'user-001',
@@ -19,7 +19,7 @@ void main() {
 
   group('Attachment.fromJson', () {
     test('parses all camelCase fields', () {
-      final att = Attachment.fromJson(_baseJson());
+      final att = Attachment.fromJson(baseJson());
 
       expect(att.id, 'att-001');
       expect(att.taskId, 'task-001');
@@ -54,25 +54,25 @@ void main() {
     });
 
     test('fileName defaults to empty string when absent', () {
-      final json = Map<String, dynamic>.from(_baseJson())..remove('fileName');
+      final json = Map<String, dynamic>.from(baseJson())..remove('fileName');
       final att = Attachment.fromJson(json);
       expect(att.fileName, '');
     });
 
     test('fileSize defaults to 0 when absent', () {
-      final json = Map<String, dynamic>.from(_baseJson())..remove('fileSize');
+      final json = Map<String, dynamic>.from(baseJson())..remove('fileSize');
       final att = Attachment.fromJson(json);
       expect(att.fileSize, 0);
     });
 
     test('mimeType defaults to empty string when absent', () {
-      final json = Map<String, dynamic>.from(_baseJson())..remove('mimeType');
+      final json = Map<String, dynamic>.from(baseJson())..remove('mimeType');
       final att = Attachment.fromJson(json);
       expect(att.mimeType, '');
     });
 
     test('fileUrl defaults to empty string when absent', () {
-      final json = Map<String, dynamic>.from(_baseJson())..remove('fileUrl');
+      final json = Map<String, dynamic>.from(baseJson())..remove('fileUrl');
       final att = Attachment.fromJson(json);
       expect(att.fileUrl, '');
     });
@@ -81,7 +81,7 @@ void main() {
   // ─── Attachment.isImage ───────────────────────────────────────────────────
 
   group('Attachment.isImage', () {
-    Attachment _makeWith(String mimeType) => Attachment(
+    Attachment makeWith(String mimeType) => Attachment(
           id: 'att-x',
           taskId: 'task-x',
           uploaderId: 'user-x',
@@ -93,43 +93,43 @@ void main() {
         );
 
     test('returns true for image/jpeg', () {
-      expect(_makeWith('image/jpeg').isImage, isTrue);
+      expect(makeWith('image/jpeg').isImage, isTrue);
     });
 
     test('returns true for image/png', () {
-      expect(_makeWith('image/png').isImage, isTrue);
+      expect(makeWith('image/png').isImage, isTrue);
     });
 
     test('returns true for image/gif', () {
-      expect(_makeWith('image/gif').isImage, isTrue);
+      expect(makeWith('image/gif').isImage, isTrue);
     });
 
     test('returns true for image/webp', () {
-      expect(_makeWith('image/webp').isImage, isTrue);
+      expect(makeWith('image/webp').isImage, isTrue);
     });
 
     test('returns true for image/svg+xml', () {
-      expect(_makeWith('image/svg+xml').isImage, isTrue);
+      expect(makeWith('image/svg+xml').isImage, isTrue);
     });
 
     test('returns false for application/pdf', () {
-      expect(_makeWith('application/pdf').isImage, isFalse);
+      expect(makeWith('application/pdf').isImage, isFalse);
     });
 
     test('returns false for video/mp4', () {
-      expect(_makeWith('video/mp4').isImage, isFalse);
+      expect(makeWith('video/mp4').isImage, isFalse);
     });
 
     test('returns false for text/plain', () {
-      expect(_makeWith('text/plain').isImage, isFalse);
+      expect(makeWith('text/plain').isImage, isFalse);
     });
 
     test('returns false for empty mimeType', () {
-      expect(_makeWith('').isImage, isFalse);
+      expect(makeWith('').isImage, isFalse);
     });
 
     test('returns false for application/octet-stream', () {
-      expect(_makeWith('application/octet-stream').isImage, isFalse);
+      expect(makeWith('application/octet-stream').isImage, isFalse);
     });
   });
 }

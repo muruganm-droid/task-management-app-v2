@@ -53,7 +53,7 @@ void main() {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (_, anim, __) => Scaffold(
+                    pageBuilder: (_, anim, _) => Scaffold(
                       body: FadeTransition(
                         opacity: anim,
                         child: const Text('Page 2'),
@@ -86,7 +86,7 @@ void main() {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (_, anim, __) => Scaffold(
+                    pageBuilder: (_, anim, _) => Scaffold(
                       body: SlideTransition(
                         position: Tween<Offset>(
                           begin: const Offset(1, 0),

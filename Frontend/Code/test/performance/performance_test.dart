@@ -56,8 +56,9 @@ void main() {
         priorityFilter: TaskPriority.high,
         searchQuery: 'Task',
       );
-      final filtered = state.filteredTasks;
+      final filteredResult = state.filteredTasks;
       sw.stop();
+      expect(filteredResult, isNotNull);
       expect(sw.elapsedMilliseconds, lessThan(50));
     });
 

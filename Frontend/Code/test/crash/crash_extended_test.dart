@@ -20,7 +20,6 @@ import 'package:task_management_app/data/models/attachment.dart';
 import 'package:task_management_app/data/models/activity.dart';
 import 'package:task_management_app/data/models/label.dart';
 import 'package:task_management_app/data/models/auth_response.dart';
-import 'package:task_management_app/data/api/api_exception.dart';
 import 'package:task_management_app/presentation/viewmodels/task_viewmodel.dart';
 import 'package:task_management_app/presentation/viewmodels/auth_viewmodel.dart';
 import 'package:task_management_app/presentation/viewmodels/dashboard_viewmodel.dart';
@@ -29,7 +28,6 @@ import 'package:task_management_app/presentation/viewmodels/notification_viewmod
 import 'package:task_management_app/presentation/viewmodels/comment_viewmodel.dart';
 import 'package:task_management_app/presentation/views/widgets/task_card.dart';
 import 'package:task_management_app/presentation/views/widgets/priority_badge.dart';
-import 'package:task_management_app/presentation/views/widgets/status_badge.dart';
 import 'package:task_management_app/presentation/views/widgets/empty_state.dart';
 import '../helpers/test_helpers.dart';
 
